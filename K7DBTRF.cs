@@ -27,7 +27,6 @@ namespace K7DBTRF
         public static Mod DBCA;
         public static Mod GOATLIB;
         public static Mod DBTBalance;
-
-
+        public static Mod StarsAbove;
     }
 }
