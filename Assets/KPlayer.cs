@@ -57,10 +57,17 @@ namespace K7DBTRF.Assets
         public bool LSSJ9UnlockMsg;
         public bool LSSJ9Achieved;
 
-        public DateTime? Offset = null;
+        public bool LSSJ9FPActive;
+        public bool LSSJ9FPUnlockMsg;
+        public bool LSSJ9FPAchieved;
 
-        public DateTime? PoweringUpTime = null;
-        public DateTime? LastPowerUpTick = null;
+        public bool LSSJ10FPActive;
+        public bool LSSJ10FPUnlockMsg;
+        public bool LSSJ10FPAchieved;
+
+        public int LSSJ10FPTimer;
+
+        
 
         private TransformationInfo? Form = null;
 
@@ -77,31 +84,13 @@ namespace K7DBTRF.Assets
                 var dodgeChance = ModPlayerClass.GetField("dodgeChange");
                 dodgeChance.SetValue(dbzPlayer, (float)dodgeChance.GetValue(dbzPlayer) - .05f);
             }
+            base.PostUpdateEquips();
 
         }
         public override void PreUpdate()
         {
-            if (ModLoader.HasMod("DBZBalance"))
-            {
-                var transformationHelper = K7DBTRF.DBTBalance.Code.DefinedTypes.First(x => x.Name.Equals("TransformationHelper"));
-                var Currentform = TransformationHandler.GetCurrentTransformation(Player);
-                if (!(Currentform.Value.buffKeyName == "LSSJ4Buff"))
-                    Offset = null;
-
-                if (Currentform.Value.buffKeyName == "LSSJ4Buff" && !Offset.HasValue)
-                    Offset = DateTime.Now;
-
-                if (BalanceConfigServer.Instance.KiRework)
-                {
-                    var MyPlayerClass = K7DBTRF.DBZMOD.Code.DefinedTypes.First(x => x.Name.Equals("MyPlayer"));
-                    dynamic myPlayer = MyPlayerClass.GetMethod("ModPlayer").Invoke(null, new object[] { Player });
-                    var kiRegenTimer = MyPlayerClass.GetField("kiRegenTimer", DBTBalance.DBTBalance.flagsAll);
-                    var kiChargeRate = MyPlayerClass.GetField("kiChargeRate");
-
-                    kiRegenTimer.SetValue(myPlayer, 0);
-                    kiChargeRate.SetValue(myPlayer, myPlayer.kiChargeRate + myPlayer.kiRegen);
-                }
-            }
+            
+            base.PreUpdate();
         }
 
         public override void PostUpdate()
@@ -112,17 +101,10 @@ namespace K7DBTRF.Assets
                 LSSJ5UnlockMsg = true;
                 Main.NewText("You went beyond potential, break all limits and go further!\nWhile in Legendary Super Saiyain 4 form press the Transform button once more to reach higher power.", Color.Green);
             }
+
             if (ModLoader.HasMod("DBZMODPORT"))
             {
-                if (BalanceConfigServer.Instance.KiRework)
-                {
-                    var MyPlayerClass = K7DBTRF.DBZMOD.Code.DefinedTypes.First(x => x.Name.Equals("MyPlayer"));
-                    //This is throwing a System.NullReferenceException
-                    dynamic myPlayer = MyPlayerClass.GetMethod("ModPlayer").Invoke(null, new object[] { Player });
-                    var kiChargeRate = MyPlayerClass.GetField("kiChargeRate");
-
-                    kiChargeRate.SetValue(myPlayer, myPlayer.kiChargeRate + myPlayer.kiRegen);
-                }
+                
             }
 
             if (LSSJ6Achieved && !LSSJ6UnlockMsg)
@@ -135,6 +117,12 @@ namespace K7DBTRF.Assets
             {
                 LSSJ8UnlockMsg = true;
                 Main.NewText("You stack together LSSJ3 and LSSJ5, the combination of 2 forms creates abysmal power!");
+            }
+
+            if (LSSJ10FPAchieved && !LSSJ10FPUnlockMsg)
+            {
+                LSSJ10FPUnlockMsg = true;
+                Main.NewText("You achieve the most dangerous power a saiyan can have, beware of it");
             }
         }
 
@@ -153,7 +141,7 @@ namespace K7DBTRF.Assets
 
         public override void SaveData(TagCompound tag)
         {
-            var vplayer = new Player();
+            var vplayer = Main.CurrentPlayer;
             tag.Add("K7DBTRF_LSSJ5Achieved", LSSJ5Achieved);
             tag.Add("K7DBTRF_LSSJ5UnlockMsg", LSSJ5UnlockMsg);
             tag.Add("K7DBTRF_LSSJ6Achieved", LSSJ6Achieved);
@@ -165,6 +153,12 @@ namespace K7DBTRF.Assets
 
             tag.Add("K7DBTRF_LSSJ9Achieved", LSSJ9Achieved);
             tag.Add("K7DBTRF_LSSJ9UnlockMsg", LSSJ9UnlockMsg);
+
+            tag.Add("K7DBTRF_LSSJ9FPAchieved", LSSJ9FPAchieved);
+            tag.Add("K7DBTRF_LSSJ9FPUnlockMsg", LSSJ9FPUnlockMsg);
+
+            tag.Add("K7DBTRF_LSSJ10FPAchieved", LSSJ10FPAchieved);
+            tag.Add("K7DBTRF_LSSJ10FPUnlockMsg", LSSJ10FPUnlockMsg);
         }
 
         public override void LoadData(TagCompound tag)
@@ -186,8 +180,18 @@ namespace K7DBTRF.Assets
 
             if (tag.ContainsKey("K7DBTRF_LSSJ9Achieved"))
                 LSSJ9Achieved = tag.GetBool("K7DBTRF_LSSJ9Achieved");
-            if (tag.ContainsKey("K7DBTRF_LSSJ8UnlockMsg"))
+            if (tag.ContainsKey("K7DBTRF_LSSJ9UnlockMsg"))
                 LSSJ9UnlockMsg = tag.GetBool("K7DBTRF_LSSJ9UnlockMsg");
+
+            if (tag.ContainsKey("K7DBTRF_LSSJ9FPAchieved"))
+                LSSJ9FPAchieved = tag.GetBool("K7DBTRF_LSSJ9FPAchieved");
+            if (tag.ContainsKey("K7DBTRF_LSSJ9FPUnlockMsg"))
+                LSSJ9FPUnlockMsg = tag.GetBool("K7DBTRF_LSSJ9FPUnlockMsg");
+
+            if (tag.ContainsKey("K7DBTRF_LSSJ10FPAchieved"))
+                LSSJ10FPAchieved = tag.GetBool("K7DBTRF_LSSJ10FPAchieved");
+            if (tag.ContainsKey("K7DBTRF_LSSJ10FPUnlockMsg"))
+                LSSJ10FPUnlockMsg = tag.GetBool("K7DBTRF_LSSJ10FPUnlockMsg");
         }
 
         public override void OnRespawn(Player player)
@@ -198,17 +202,12 @@ namespace K7DBTRF.Assets
 
         public override void ResetEffects()
         {
+            
             if (ModLoader.HasMod("DBZMODPORT"))
             {
-                if (BalanceConfigServer.Instance.KiRework)
-                {
-                    var MyPlayerClass = DBTBalance.DBTBalance.DBZMOD.Code.DefinedTypes.First(x => x.Name.Equals("MyPlayer"));
-                    dynamic myPlayer = MyPlayerClass.GetMethod("ModPlayer").Invoke(null, new object[] { Player });
-                    var kiChargeRate = MyPlayerClass.GetField("kiChargeRate");
 
-                    kiChargeRate.SetValue(myPlayer, myPlayer.kiChargeRate + myPlayer.kiRegen);
-                }
             }
+            base.ResetEffects();
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet)
@@ -240,7 +239,7 @@ namespace K7DBTRF.Assets
         {
             var Kplayer = player.GetModPlayer<KPlayer>();
             var Bplayer = player.GetModPlayer<BPlayer>();
-            return Bplayer.LSSJ4Achieved && player.GetModPlayer<GPlayer>().Trait == "Legendary";
+            return player.GetModPlayer<GPlayer>().Trait == "Legendary";
         }
 
         public override Connection[] Connections() => new Connection[]
@@ -248,7 +247,9 @@ namespace K7DBTRF.Assets
             new Connection(0,2,1,false,new Gradient(Color.White).AddStop(0.60f, new Color(0, 0, 255))),
             new Connection(1,2,1,false,new Gradient(Color.White).AddStop(0.60f, new Color(0, 0, 255))),
             new Connection(2,2,1,false,new Gradient(Color.Blue).AddStop(0.60f, new Color(0, 255, 0))),
-            new Connection(3,2,1,false,new Gradient(Color.Green).AddStop(0.60f, new Color(30, 30, 30)))
+            new Connection(3,2,1,false,new Gradient(Color.Green).AddStop(0.60f, new Color(30, 30, 30))),
+            new Connection(4,2,1,false,new Gradient(Color.Green).AddStop(0.60f, new Color(30, 30, 30))),
+            new Connection(5,2,1,false,new Gradient(Color.Green).AddStop(0.60f, new Color(30, 30, 30)))
         };
 
         public override string Name() => "Legendary Alternative Future";
@@ -259,7 +260,9 @@ namespace K7DBTRF.Assets
             new Node(1, 2, "LSSJ6Buff", "K7DBTRF/Buffs/LSSJ6Buff", "Consume the 4 star dragon ball combined with evil prideful essence",UnlockConditionLSSJ6,DiscoverConditionLSSJ6),
             new Node(2, 2, "LSSJ7Buff", "K7DBTRF/Buffs/LSSJ7Buff", "I think you should just train harder with your new form",UnlockConditionLSSJ7,DiscoverConditionLSSJ7),
             new Node(3, 2, "LSSJ8Buff", "K7DBTRF/Buffs/LSSJ8Buff", "Can you defeat a crazed cultist after mastering many forms?",UnlockConditionLSSJ8,DiscoverConditionLSSJ8),
-            new Node(4, 2, "LSSJ9Buff", "K7DBTRF/Buffs/LSSJ9Buff", "The emblem of the guardian of hell could be infused wth pure ki and unlock new power", UnlockConditionLSSJ9, DiscoverConditionLSSJ9)
+            new Node(4, 2, "LSSJ9Buff", "K7DBTRF/Buffs/LSSJ9Buff", "The emblem of the guardian of hell could be infused wth pure ki and unlock new power", UnlockConditionLSSJ9, DiscoverConditionLSSJ9),
+            new Node(5, 2, "LSSJ9FPBuff", "K7DBTRF/Buffs/LSSJ9FPBuff", "Consume the pure emblem and it also gets unlocked with LSSJ9", UnlockConditionLSSJ9FP, DiscoverConditionLSSJ9FP),
+            new Node(6, 2, "LSSJ10FPBuff", "K7DBTRF/Buffs/LSSJ10FPBuff", "Eat the voodoo doll of your first friend, and you will get dark power", UnlockConditionLSSJ10FP, DiscoverConditionLSSJ10FP)
         };
 
         public bool UnlockConditionLSSJ5(Player player)
@@ -319,6 +322,30 @@ namespace K7DBTRF.Assets
         {
             var Kplayer = player.GetModPlayer<KPlayer>();
             return Kplayer.LSSJ8Achieved;
+        }
+
+        public bool UnlockConditionLSSJ9FP(Player player)
+        {
+            var Kplayer = player.GetModPlayer<KPlayer>();
+            return Kplayer.LSSJ9FPAchieved;
+        }
+
+        public bool DiscoverConditionLSSJ9FP(Player player)
+        {
+            var Kplayer = player.GetModPlayer<KPlayer>();
+            return Kplayer.LSSJ8Achieved;
+        }
+
+        public bool UnlockConditionLSSJ10FP(Player player)
+        {
+            var Kplayer = player.GetModPlayer<KPlayer>();
+            return Kplayer.LSSJ10FPAchieved;
+        }
+
+        public bool DiscoverConditionLSSJ10FP(Player player)
+        {
+            var Kplayer = player.GetModPlayer<KPlayer>();
+            return Kplayer.LSSJ9Achieved;
         }
     }
 }

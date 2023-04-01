@@ -34,10 +34,7 @@ namespace K7DBTRF.Assets
         [DefaultValue(true)]
         public bool ChargeRework;
 
-        [Label("Ki rework")]
-        [Tooltip("Removes all passive Ki Regen and turns it into Ki Charge Rate.")]
-        [DefaultValue(true)]
-        public bool KiRework;
+        
 
         [Label("Longer transformation times")]
         [Tooltip("Makes transforming into SSJ forms require holding the button for a small duration.")]
