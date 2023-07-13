@@ -37,17 +37,27 @@ namespace K7DBTRF.NPCs
                         modPlayer.LSSJ8Achieved = true;
                         return;
                     }
+                    if (!modPlayer.SSJ8Achieved && modPlayer.SSJ6Achieved)
+                    {
+                        modPlayer.SSJ8Achieved = true;
+                        return;
+                    }
                 }
 
                 if (npc.type == NPCID.MoonLordCore)
                 {
-                    var modPlayer = player.GetModPlayer<KPlayer>();
+                    KPlayer modPlayer = player.GetModPlayer<KPlayer>();
                     KPlayer kplayer = Main.CurrentPlayer.GetModPlayer<KPlayer>();
-                    var bplayer = player.GetModPlayer<BPlayer>();
+                    BPlayer bplayer = player.GetModPlayer<BPlayer>();
 
                     if ((!kplayer.LSSJ5Achieved) && bplayer.LSSJ4Achieved)
                     {
-                        modPlayer.LSSJ5Achieved = true;
+                        kplayer.LSSJ5Achieved = true;
+                        return;
+                    }
+                    if (!kplayer.SSJ5Achieved)
+                    {
+                        kplayer.SSJ5Achieved= true;
                         return;
                     }
                 }
@@ -74,6 +84,16 @@ namespace K7DBTRF.NPCs
                                         KNetworkHandler.SendUnlockStatus(i, true);
                                     }
                                 }
+
+                                if (!modPlayer.SSJ8Achieved)
+                                {
+                                    if (npc.type == NPCID.CultistBoss)
+                                    {
+                                        modPlayer.MP_Unlock = true;
+                                        modPlayer.SSJ8Achieved = true;
+                                        KNetworkHandler.SendUnlockStatus(i, true);
+                                    }
+                                }
                             }
                         }
                     }
@@ -95,6 +115,16 @@ namespace K7DBTRF.NPCs
                                         {
                                             modPlayer.MP_Unlock = true;
                                             modPlayer.LSSJ5Achieved = true;
+                                            KNetworkHandler.SendUnlockStatus(i, true);
+                                        }
+                                    }
+
+                                    if (!modPlayer.SSJ5Achieved)
+                                    {
+                                        if (npc.type == NPCID.MoonLordCore)
+                                        {
+                                            modPlayer.MP_Unlock = true;
+                                            modPlayer.SSJ5Achieved = true;
                                             KNetworkHandler.SendUnlockStatus(i, true);
                                         }
                                     }
