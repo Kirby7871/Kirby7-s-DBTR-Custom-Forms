@@ -49,15 +49,22 @@ namespace K7DBTRF.Items.Consumables
         public override bool? UseItem(Player player)
         {
             var kplayer = player.GetModPlayer<KPlayer>();
-            return kplayer.LSSJ5Achieved && !kplayer.LSSJ6Achieved;
+            return (kplayer.LSSJ5Achieved && !kplayer.LSSJ6Achieved) || (kplayer.SSJ5Achieved && !kplayer.SSJ6Achieved);
         }
 
         public override void OnConsumeItem(Player player)
         {
             var kplayer = player.GetModPlayer<KPlayer>();
-            if (!kplayer.LSSJ6Achieved)
+            if (!kplayer.LSSJ6Achieved || !kplayer.SSJ6Achieved)
             {
-                kplayer.LSSJ6Achieved = true;
+                if (!kplayer.LSSJ6Achieved)
+                {
+                    kplayer.LSSJ6Achieved = true;
+                }
+                if (!kplayer.SSJ6Achieved)
+                {
+                    kplayer.SSJ6Achieved = true;
+                }
             }
 
 

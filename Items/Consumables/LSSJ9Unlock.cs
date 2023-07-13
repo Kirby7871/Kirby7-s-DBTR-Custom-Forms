@@ -49,7 +49,7 @@ namespace K7DBTRF.Items.Consumables
         public override bool? UseItem(Player player)
         {
             var kplayer = player.GetModPlayer<KPlayer>();
-            return kplayer.LSSJ8Achieved && !kplayer.LSSJ9Achieved;
+            return (kplayer.LSSJ8Achieved && !kplayer.LSSJ9Achieved || !kplayer.LSSJ9FPAchieved) || (kplayer.SSJ8Achieved && !kplayer.SSJ9Achieved || !kplayer.SSJ9FPAchieved);
         }
 
         public override void OnConsumeItem(Player player)
@@ -60,7 +60,20 @@ namespace K7DBTRF.Items.Consumables
                 kplayer.LSSJ9Achieved = true;
             }
 
+            if (!kplayer.LSSJ9FPAchieved)
+            {
+                kplayer.LSSJ9FPAchieved = true;
+            }
 
+            if (!kplayer.SSJ9Achieved)
+            {
+                kplayer.SSJ9Achieved = true;
+            }
+
+            if (!kplayer.SSJ9FPAchieved)
+            {
+                kplayer.SSJ9FPAchieved = true;
+            }
         }
 
         public override void AddRecipes()

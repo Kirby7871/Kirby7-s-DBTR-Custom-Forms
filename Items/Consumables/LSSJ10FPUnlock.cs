@@ -50,21 +50,30 @@ namespace K7DBTRF.Items.Consumables
         public override bool? UseItem(Player player)
         {
             var kplayer = player.GetModPlayer<KPlayer>();
-            return !kplayer.LSSJ10FPAchieved && NPC.AnyNPCs(NPCID.Guide);
+            return !kplayer.LSSJ10FPAchieved || !kplayer.SSJ10FPAchieved && NPC.AnyNPCs(NPCID.Guide);
         }
 
         public override void OnConsumeItem(Player player)
         {
-
-
             var kplayer = player.GetModPlayer<KPlayer>();
-            if (!kplayer.LSSJ9Achieved)
+            var isLegendary = player.GetModPlayer<GPlayer>().Trait == "Legendary";
+            if (!kplayer.LSSJ9Achieved ^ !kplayer.SSJ9Achieved)
             {
-                player.KillMe(PlayerDeathReason.ByCustomReason(player.name + "could not atttain the forbidden power and died"), 2147000000, 0, false);
+                player.KillMe(PlayerDeathReason.ByCustomReason(player.name + "could not attain the forbidden power and died"), 2147000000, 0, false);
             }
-            else if (!kplayer.LSSJ10FPAchieved)
+            else if (!kplayer.LSSJ10FPAchieved | !kplayer.SSJ10FPAchieved)
             {
-                kplayer.LSSJ10FPAchieved = true;
+                if (isLegendary)
+                {
+                    kplayer.LSSJ10FPAchieved = true;
+                }
+                else
+                {
+                    if (!kplayer.SSJ10FPAchieved)
+                    {
+                        kplayer.SSJ10FPAchieved = true;
+                    }
+                }
             }
 
             for (int i = 0; i < Main.maxNPCs; i++)
