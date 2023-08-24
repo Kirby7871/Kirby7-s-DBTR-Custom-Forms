@@ -23,9 +23,9 @@ namespace K7DBTRF.Buffs
     {
         public override void SetStaticDefaults()
         {
-            kiDrainRate = 5.0f;
-            kiDrainRateWithMastery = 2.5f;
-            attackDrainMulti = 1.80f;
+            kiDrainRate = 4.0f;
+            kiDrainRateWithMastery = 2.0f;
+            attackDrainMulti = 1.50f;
             if (BalanceConfigServer.Instance.SSJTweaks)
             {
                 damageMulti = 2.5f;
@@ -85,6 +85,24 @@ namespace K7DBTRF.Buffs
             modPlayer.LSSJ6Active = false;
 
 
+        }
+
+
+        public override void Update(Player player, ref int buffIndex)
+        {
+            player.eyeColor = Color.Black;
+            player.gills = true;
+            player.GetAttackSpeed(DamageClass.Generic) += 0.3f;
+            if(BalanceConfigServer.Instance.SSJTweaks)
+            {
+                player.GetDamage(DamageClass.Generic) += 2.5f;
+            }
+            else
+            {
+                player.GetDamage(DamageClass.Generic) += 5.0f;
+            }
+            player.lavaImmune = true;
+            base.Update(player, ref buffIndex);
         }
     }
 }

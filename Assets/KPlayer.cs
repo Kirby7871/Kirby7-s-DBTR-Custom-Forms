@@ -100,6 +100,8 @@ namespace K7DBTRF.Assets
 
         public int SSJ10FPTimer;
 
+        public bool SSJ10Cheat;
+
         private TransformationInfo? Form = null;
 
         public override void PostUpdateEquips()
@@ -126,7 +128,6 @@ namespace K7DBTRF.Assets
 
         public override void PostUpdate()
         {
-            var vplayer = new Player();
             if (LSSJ5Achieved && !LSSJ5UnlockMsg) 
             {
                 LSSJ5UnlockMsg = true;
@@ -174,6 +175,10 @@ namespace K7DBTRF.Assets
 
         public static bool MasteredSSJ6(Player player) => GPlayer.ModPlayer(player).GetMastery(ModContent.BuffType<Buffs.SSJ6Buff>()) >= 1f;
 
+        public static bool MasteredSSJ10(Player player) => GPlayer.ModPlayer(player).GetMastery(ModContent.BuffType<Buffs.SSJ10FPBuff>()) >= 1f;
+
+        public static bool MasteredLSSJ10(Player player) => GPlayer.ModPlayer(player).GetMastery(ModContent.BuffType<Buffs.LSSJ10FPBuff>()) >= 1f;
+
         public override void SaveData(TagCompound tag)
         {
             var vplayer = Main.CurrentPlayer;
@@ -210,8 +215,13 @@ namespace K7DBTRF.Assets
             tag.Add("K7DBTRF_SSJ9Achieved", SSJ9Achieved);
             tag.Add("K7DBTRF_SSJ9UnlockMsg", SSJ9UnlockMsg);
 
+            tag.Add("K7DBTRF_SSJ9FPAchieved", SSJ9FPAchieved);
+            tag.Add("K7DBTRF_SSJ9FPUnlockMsg", SSJ9FPUnlockMsg);
+
             tag.Add("K7DBTRF_SSJ10FPAchieved", SSJ10FPAchieved);
             tag.Add("K7DBTRF_SSJ10FPUnlockMsg", SSJ10FPUnlockMsg);
+
+            tag.Add("K7DBTRF_SSJ10Cheat", SSJ10Cheat);
         }
 
         public override void LoadData(TagCompound tag)
@@ -277,6 +287,9 @@ namespace K7DBTRF.Assets
                 SSJ10FPAchieved = tag.GetBool("K7DBTRF_SSJ10FPAchieved");
             if (tag.ContainsKey("K7DBTRF_SSJ10FPUnlockMsg"))
                 SSJ10FPUnlockMsg = tag.GetBool("K7DBTRF_SSJ10FPUnlockMsg");
+
+            if (tag.ContainsKey("K7DBTRF_SSJ10Cheat"))
+                SSJ10Cheat = tag.GetBool("K7DBTRF_SSJ10Cheat");
         }
 
         public override void OnRespawn(Player player)
@@ -341,13 +354,13 @@ namespace K7DBTRF.Assets
 
         public override Node[] Nodes() => new Node[]
         {
-            new Node(0, 2, "LSSJ5Buff", "K7DBTRF/Buffs/LSSJ5Buff", "You did well, but what if you risked the fate of the world again to perfect your skill?",UnlockConditionLSSJ5,DiscoverConditionLSSJ5),
-            new Node(1, 2, "LSSJ6Buff", "K7DBTRF/Buffs/LSSJ6Buff", "Consume the 4 star dragon ball combined with evil prideful essence",UnlockConditionLSSJ6,DiscoverConditionLSSJ6),
-            new Node(2, 2, "LSSJ7Buff", "K7DBTRF/Buffs/LSSJ7Buff", "I think you should just train harder with your new form",UnlockConditionLSSJ7,DiscoverConditionLSSJ7),
-            new Node(3, 2, "LSSJ8Buff", "K7DBTRF/Buffs/LSSJ8Buff", "Can you defeat a crazed cultist after mastering many forms?",UnlockConditionLSSJ8,DiscoverConditionLSSJ8),
-            new Node(4, 2, "LSSJ9Buff", "K7DBTRF/Buffs/LSSJ9Buff", "The emblem of the guardian of hell could be infused wth pure ki and unlock new power", UnlockConditionLSSJ9, DiscoverConditionLSSJ9),
+            new Node(0, 2, "LSSJ5Buff", "K7DBTRF/Buffs/LSSJ5Buff", "You did well, but what if you risked the fate of the world again to perfect your skill? (Kill moon lord)",UnlockConditionLSSJ5,DiscoverConditionLSSJ5),
+            new Node(1, 2, "LSSJ6Buff", "K7DBTRF/Buffs/LSSJ6Buff", "Consume the 4 star dragon ball combined with evil prideful essence (Craft  evil infused dragon ball)",UnlockConditionLSSJ6,DiscoverConditionLSSJ6),
+            new Node(2, 2, "LSSJ7Buff", "K7DBTRF/Buffs/LSSJ7Buff", "I think you should just train harder with your new form (Master LSSJ6)",UnlockConditionLSSJ7,DiscoverConditionLSSJ7),
+            new Node(3, 2, "LSSJ8Buff", "K7DBTRF/Buffs/LSSJ8Buff", "Can you defeat a crazed cultist after mastering many forms? (Defeat Lunatic cultist while having LSSJ6)",UnlockConditionLSSJ8,DiscoverConditionLSSJ8),
+            new Node(4, 2, "LSSJ9Buff", "K7DBTRF/Buffs/LSSJ9Buff", "The emblem of the guardian of hell could be infused wth pure ki and unlock new power (Craft the pure emblem)", UnlockConditionLSSJ9, DiscoverConditionLSSJ9),
             new Node(5, 2, "LSSJ9FPBuff", "K7DBTRF/Buffs/LSSJ9FPBuff", "Consume the pure emblem and it also gets unlocked with LSSJ9", UnlockConditionLSSJ9FP, DiscoverConditionLSSJ9FP),
-            new Node(6, 2, "LSSJ10FPBuff", "K7DBTRF/Buffs/LSSJ10FPBuff", "Eat the voodoo doll of your first friend, and you will get dark power", UnlockConditionLSSJ10FP, DiscoverConditionLSSJ10FP)
+            new Node(6, 2, "LSSJ10FPBuff", "K7DBTRF/Buffs/LSSJ10FPBuff", "Eat the voodoo doll of your first friend, and you will get dark power (Craft voodoo doll on a plate)", UnlockConditionLSSJ10FP, DiscoverConditionLSSJ10FP)
         };
 
         public bool UnlockConditionLSSJ5(Player player)
@@ -461,13 +474,13 @@ namespace K7DBTRF.Assets
 
         public override Node[] Nodes() => new Node[]
         {
-            new Node(0, 2, "SSJ5Buff", "K7DBTRF/Buffs/SSJ5Buff", "You should kill the moon lord again to improve your new power",UnlockConditionSSJ5,DiscoverConditionSSJ5),
+            new Node(0, 2, "SSJ5Buff", "K7DBTRF/Buffs/SSJ5Buff", "You should kill the moon lord again to improve your new power\n If it does not unlock, use the unlock item the moon lord drops",UnlockConditionSSJ5,DiscoverConditionSSJ5),
             new Node(1, 2, "SSJ6Buff", "K7DBTRF/Buffs/SSJ6Buff", "Consume the 4 star dragon ball combined with evil prideful essence",UnlockConditionSSJ6,DiscoverConditionSSJ6),
-            new Node(2, 2, "SSJ7Buff", "K7DBTRF/Buffs/SSJ7Buff", "I think you should just train harder with your new form",UnlockConditionSSJ7,DiscoverConditionSSJ7),
-            new Node(3, 2, "SSJ8Buff", "K7DBTRF/Buffs/SSJ8Buff", "Can you defeat a crazed cultist after mastering many forms?",UnlockConditionSSJ8,DiscoverConditionSSJ8),
-            new Node(4, 2, "SSJ9Buff", "K7DBTRF/Buffs/SSJ9Buff", "The emblem of the guardian of hell could be infused wth pure ki and unlock new power", UnlockConditionSSJ9, DiscoverConditionSSJ9),
+            new Node(2, 2, "SSJ7Buff", "K7DBTRF/Buffs/SSJ7Buff", "I think you should just train harder with your new form (Master SSJ6)",UnlockConditionSSJ7,DiscoverConditionSSJ7),
+            new Node(3, 2, "SSJ8Buff", "K7DBTRF/Buffs/SSJ8Buff", "Can you defeat a crazed cultist after mastering many forms? (Defeat Lunatic cultist while having SSJ6)\n Or use the unlock item dropped from Lunatic Cultist",UnlockConditionSSJ8,DiscoverConditionSSJ8),
+            new Node(4, 2, "SSJ9Buff", "K7DBTRF/Buffs/SSJ9Buff", "The emblem of the guardian of hell could be infused wth pure ki and unlock new powe (Craft the pure emblem)", UnlockConditionSSJ9, DiscoverConditionSSJ9),
             new Node(5, 2, "SSJ9FPBuff", "K7DBTRF/Buffs/SSJ9FPBuff", "See SSJ9", UnlockConditionSSJ9FP, DiscoverConditionSSJ9FP),
-            new Node(6, 2, "SSJ10FPBuff", "K7DBTRF/Buffs/SSJ10FPBuff", "Eat the voodoo doll of your first friend, and you will get dark power", UnlockConditionSSJ10FP, DiscoverConditionSSJ10FP)
+            new Node(6, 2, "SSJ10FPBuff", "K7DBTRF/Buffs/SSJ10FPBuff", "Eat the voodoo doll of your first friend, and you will get dark power (Craft voodoo doll on a plate)", UnlockConditionSSJ10FP, DiscoverConditionSSJ10FP)
         };
 
         public bool UnlockConditionSSJ5(Player player)

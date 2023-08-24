@@ -24,12 +24,12 @@ namespace K7DBTRF.Buffs
     {
         public override void SetStaticDefaults()
         {
-            kiDrainRate = 4.0f;
-            kiDrainRateWithMastery = 2.0f;
+            kiDrainRate = 3.0f;
+            kiDrainRateWithMastery = 1.5f;
             attackDrainMulti = 1.50f;
             if (BalanceConfigServer.Instance.SSJTweaks)
             {
-                damageMulti = 3.7f;
+                damageMulti = 3.8f;
                 speedMulti = 1.0f;
                 baseDefenceBonus = 0;
             }
@@ -90,11 +90,11 @@ namespace K7DBTRF.Buffs
 
             if (BalanceConfigServer.Instance.SSJTweaks)
             {
-                player.GetDamage(DamageClass.Generic) += 3.7f;
+                player.GetDamage(DamageClass.Generic) += 3.8f;
             }
             else
             {
-                player.GetDamage(DamageClass.Generic) += 7.4f;
+                player.GetDamage(DamageClass.Generic) += 7.6f;
             }
 
             player.lavaImmune = true;

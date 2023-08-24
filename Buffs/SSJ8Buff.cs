@@ -29,13 +29,13 @@ namespace K7DBTRF.Buffs
             attackDrainMulti = 1.50f;
             if (BalanceConfigServer.Instance.SSJTweaks)
             {
-                damageMulti = 3.3f;
+                damageMulti = 3.5f;
                 speedMulti = 0.9f;
                 baseDefenceBonus = 0;
             }
             else
             {
-                damageMulti = 6.6f;
+                damageMulti = 7.0f;
                 speedMulti = 3.0f;
                 baseDefenceBonus = 100;
             }

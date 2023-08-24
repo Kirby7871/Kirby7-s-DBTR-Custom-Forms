@@ -49,7 +49,7 @@ namespace K7DBTRF.Items.Consumables
         public override bool? UseItem(Player player)
         {
             var kplayer = player.GetModPlayer<KPlayer>();
-            return (kplayer.LSSJ8Achieved && !kplayer.LSSJ9Achieved || !kplayer.LSSJ9FPAchieved) || (kplayer.SSJ8Achieved && !kplayer.SSJ9Achieved || !kplayer.SSJ9FPAchieved);
+            return ((kplayer.LSSJ8Achieved && (!kplayer.LSSJ9Achieved || !kplayer.LSSJ9FPAchieved))) || (kplayer.SSJ8Achieved && (!kplayer.SSJ9Achieved || !kplayer.SSJ9FPAchieved));
         }
 
         public override void OnConsumeItem(Player player)
@@ -58,11 +58,13 @@ namespace K7DBTRF.Items.Consumables
             if (!kplayer.LSSJ9Achieved)
             {
                 kplayer.LSSJ9Achieved = true;
+                
             }
 
             if (!kplayer.LSSJ9FPAchieved)
             {
                 kplayer.LSSJ9FPAchieved = true;
+                Main.NewText("The purity of the hallow combined with the guardian of the world create a new form of holiness and abhorrence!", 163, 73, 164);
             }
 
             if (!kplayer.SSJ9Achieved)

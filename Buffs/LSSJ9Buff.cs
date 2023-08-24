@@ -24,20 +24,20 @@ namespace K7DBTRF.Buffs
     {
         public override void SetStaticDefaults()
         {
-            kiDrainRate = 3.0f;
-            kiDrainRateWithMastery = 1.5f;
+            kiDrainRate = 4.0f;
+            kiDrainRateWithMastery = 2.0f;
             attackDrainMulti = 1.50f;
             if (BalanceConfigServer.Instance.SSJTweaks)
             {
-                damageMulti = 3.3f;
-                speedMulti = 1.0f;
-                baseDefenceBonus = 30;
+                damageMulti = 3.5f;
+                speedMulti = 0.9f;
+                baseDefenceBonus = 120;
             }
             else
             {
                 damageMulti = 7.0f;
                 speedMulti = 2.5f;
-                baseDefenceBonus = 120;
+                baseDefenceBonus = 240;
             }
 
             base.SetStaticDefaults();
@@ -64,8 +64,8 @@ namespace K7DBTRF.Buffs
             var currentForm = TransformationHandler.GetCurrentTransformation(player);
             bool isLegendary = player.GetModPlayer<GPlayer>().Trait == "Legendary";
 
-            return !player.HasBuff<LSSJ8Buff>() && isLegendary //check if we aren't already in LSSJ5, if we are, we do not transform again obviously
-                 && modPlayer.LSSJ8Achieved;
+            return !player.HasBuff<LSSJ9Buff>() && isLegendary //check if we aren't already in LSSJ5, if we are, we do not transform again obviously
+                 && modPlayer.LSSJ9Achieved;
         }
 
         public override void OnTransform(Player player)
@@ -87,6 +87,16 @@ namespace K7DBTRF.Buffs
         {
             player.gills = true;
             player.GetAttackSpeed(DamageClass.Generic) += 0.8f;
+
+            if (BalanceConfigServer.Instance.SSJTweaks)
+            {
+                player.GetDamage(DamageClass.Generic) += 3.5f;
+            }
+            else
+            {
+                player.GetDamage(DamageClass.Generic) += 7.0f;
+            }
+
             player.lavaImmune = true;
             base.Update(player, ref buffIndex);
         }

@@ -57,22 +57,21 @@ namespace K7DBTRF.Items.Consumables
         {
             var kplayer = player.GetModPlayer<KPlayer>();
             var isLegendary = player.GetModPlayer<GPlayer>().Trait == "Legendary";
-            if (!kplayer.LSSJ9Achieved ^ !kplayer.SSJ9Achieved)
+            if ((isLegendary && !kplayer.LSSJ9Achieved) || (!isLegendary && !kplayer.SSJ9Achieved))
             {
-                player.KillMe(PlayerDeathReason.ByCustomReason(player.name + "could not attain the forbidden power and died"), 2147000000, 0, false);
+                player.KillMe(PlayerDeathReason.ByCustomReason(player.name + " could not attain the forbidden power and died"), 2147000000, 0, false);
             }
-            else if (!kplayer.LSSJ10FPAchieved | !kplayer.SSJ10FPAchieved)
+            else if (!kplayer.LSSJ10FPAchieved || !kplayer.SSJ10FPAchieved)
             {
-                if (isLegendary)
+                if (!kplayer.LSSJ10FPAchieved)
                 {
                     kplayer.LSSJ10FPAchieved = true;
+                    Main.NewText("The forbidden power is in your hands, do not stay on it for a minute", 120, 120, 120);
                 }
-                else
+                if (!kplayer.SSJ10FPAchieved)
                 {
-                    if (!kplayer.SSJ10FPAchieved)
-                    {
-                        kplayer.SSJ10FPAchieved = true;
-                    }
+                    kplayer.SSJ10FPAchieved = true;
+                    Main.NewText("The forbidden power is in your hands, do not stay on it for a minute", 120, 120, 120);
                 }
             }
 

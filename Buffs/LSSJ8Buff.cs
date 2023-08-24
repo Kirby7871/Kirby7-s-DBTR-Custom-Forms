@@ -24,19 +24,19 @@ namespace K7DBTRF.Buffs
     {
         public override void SetStaticDefaults()
         {
-            kiDrainRate = 5.0f;
-            kiDrainRateWithMastery = 2.5f;
+            kiDrainRate = 6.0f;
+            kiDrainRateWithMastery = 3.0f;
             attackDrainMulti = 1.50f;
             if (BalanceConfigServer.Instance.SSJTweaks)
             {
-                damageMulti = 3.1f;
-                speedMulti = 0.9f;
+                damageMulti = 3.3f;
+                speedMulti = 0.7f;
                 baseDefenceBonus = 100;
             }
             else
             {
-                damageMulti = 6.2f;
-                speedMulti = 3.0f;
+                damageMulti = 6.6f;
+                speedMulti = 1.5f;
                 baseDefenceBonus = 200;
             }
 
@@ -65,7 +65,7 @@ namespace K7DBTRF.Buffs
             bool isLegendary = player.GetModPlayer<GPlayer>().Trait == "Legendary";
 
             return !player.HasBuff<LSSJ8Buff>() && isLegendary //check if we aren't already in LSSJ5, if we are, we do not transform again obviously
-                 && modPlayer.LSSJ6Achieved;
+                 && modPlayer.LSSJ8Achieved;
         }
 
         public override void OnTransform(Player player)
@@ -88,6 +88,16 @@ namespace K7DBTRF.Buffs
             player.gills = true;
             player.statLifeMax2 += 300;
             player.GetAttackSpeed(DamageClass.Generic) += 0.7f;
+
+            if (BalanceConfigServer.Instance.SSJTweaks)
+            {
+                player.GetDamage(DamageClass.Generic) += 3.3f;
+            }
+            else
+            {
+                player.GetDamage(DamageClass.Generic) += 6.6f;
+            }
+
             player.lavaImmune = true;
             base.Update(player, ref buffIndex);
         }

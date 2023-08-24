@@ -16,6 +16,8 @@ using DBTBalance.Buffs;
 using log4net.Util;
 using DBTBalance;
 using K7DBTRF.Assets;
+using DBZMODPORT;
+using System.Reflection;
 
 namespace K7DBTRF.Buffs
 {
@@ -28,13 +30,13 @@ namespace K7DBTRF.Buffs
             attackDrainMulti = 1.70f;
             if (BalanceConfigServer.Instance.SSJTweaks)
             {
-                damageMulti = 2.2f;
+                damageMulti = 2.5f;
                 speedMulti = 1.5f;
                 baseDefenceBonus = 62;
             }
             else
             {
-                damageMulti = 4.3f;
+                damageMulti = 5.0f;
                 speedMulti = 3.50f;
                 baseDefenceBonus = 100;
             }
@@ -87,8 +89,26 @@ namespace K7DBTRF.Buffs
            
         }
 
-        
 
+        public override void Update(Player player, ref int buffIndex)
+        {
+            
+            player.gills = true;
+            player.GetAttackSpeed(DamageClass.Generic) += 0.2f;
+
+            KPlayer kplayer = player.GetModPlayer<KPlayer>();
+
+            if (BalanceConfigServer.Instance.SSJTweaks)
+            {
+                player.GetDamage(DamageClass.Generic) += 2.5f;
+            }
+            else
+            {
+                player.GetDamage(DamageClass.Generic) += 5.0f;
+            }
+            player.lavaImmune = true;
+            base.Update(player, ref buffIndex);
+        }
 
     }
 }

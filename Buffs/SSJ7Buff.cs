@@ -29,15 +29,15 @@ namespace K7DBTRF.Buffs
             attackDrainMulti = 1.50f;
             if (BalanceConfigServer.Instance.SSJTweaks)
             {
-                damageMulti = 2.8f;
+                damageMulti = 3.3f;
                 speedMulti = 1.1f;
-                baseDefenceBonus = 20;
+                baseDefenceBonus = 0;
             }
             else
             {
-                damageMulti = 5.5f;
+                damageMulti = 6.6f;
                 speedMulti = 3.0f;
-                baseDefenceBonus = 60;
+                baseDefenceBonus = 20;
             }
 
             base.SetStaticDefaults();
@@ -92,11 +92,11 @@ namespace K7DBTRF.Buffs
 
             if (BalanceConfigServer.Instance.SSJTweaks)
             {
-                player.GetDamage(DamageClass.Generic) += 2.8f;
+                player.GetDamage(DamageClass.Generic) += 3.3f;
             }
             else
             {
-                player.GetDamage(DamageClass.Generic) += 5.5f;
+                player.GetDamage(DamageClass.Generic) += 6.6f;
             }
 
             player.lavaImmune = true;

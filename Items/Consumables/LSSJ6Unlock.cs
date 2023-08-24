@@ -60,10 +60,12 @@ namespace K7DBTRF.Items.Consumables
                 if (!kplayer.LSSJ6Achieved)
                 {
                     kplayer.LSSJ6Achieved = true;
+                    Main.NewText("The dragon ball fuses onto your body, powering further your SSJ5, you call this SSJ6", 255, 255, 0);
                 }
                 if (!kplayer.SSJ6Achieved)
                 {
                     kplayer.SSJ6Achieved = true;
+                    Main.NewText("The dragon ball fuses onto your body, powering further your SSJ5, you call this SSJ6", 255, 255, 0);
                 }
             }
 
