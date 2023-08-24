@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "i8ovBOCSP0CsSp8wfY3P5Lc5nKPblHXZfVHUVMYX+IRCddMln9ilRSw94bS7veuWqVhcS5yfFI2ADImwivTeWQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\aleja\\OneDrive\\Documentos\\My Games\\Terraria\\tModLoader\\ModSources\\K7DBTRF\\K7DBTRF.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\aleja\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
+  ],
+  "logs": []
+}
