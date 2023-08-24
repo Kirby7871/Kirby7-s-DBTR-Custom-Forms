@@ -1,0 +1,25 @@
+Kirby7's DBTR Custom Forms is a pretty cool mod, it adds custom forms, per example, from the Dragon Ball AF series.
+
+To use the mod, you need the mods Dragon Ball Terraria: Rebalanced, and Vyklade's DBT Transformation Lib
+
+After a long wait, youcan finally access SSJ5 and above without having to be Legendary! Enjoy unlocking These transformations without restrictions, note, however, these forms do not have the exact same stats, but are similar.
+
+Are you ready to embrace "La E S E N C I A?"
+
+NOTE: **THERE MAY BE ISSUES IN MULTIPLAYER**
+It is recommended that if you play multiplayer with friends, you should unlock the forms you are about to, in single player, because MP Terraria breaks modding a lot.
+However, with the newest update, bosses drop form unlocking items that will unlock a form for you in case the unlock fails, now you should be able to use for multiplayer too.
+
+How to unlock forms:
+SSJ5/LSSJ5: Defeat moon lord, and if it is not unlocked, consume the unlock item "Phantasmal saiyan soul", for the LSSJ5, you are required to have LSSJ4 unlocked first.
+SSJ6/LSSJ6: Craft "Evil infused dragon ball" using a 4-star dragon ball and consume it.
+SSJ7/LSSJ7: Master it's respective SSJ6/LSSJ6
+SSJ8/LSSJ8: Defeat Lunatic Cultist, if it's not unlocked, consume the unlock item "Cultist Saiyan knowledge".
+SSJ9/LSSJ9 and SSJ9FP/LSSJ9FP: Consume the Pure emblem, craft it with ki emblem dropped from wall of flesh and pure ki crystals.
+SSJ10/LSSJ10: Consume "Voodoo doll on a plate" while having the respective SSJ9 unlocked and a Guide on the world, Craft it with Guide voodoo doll and fancy dishes.
+
+Changelog: 1.1.1.0 "Tweaked form stats a bit, specially SSJ10/LSSJ10, if you master it, it can last up to 2 minutes and has increased damage"
+Changelog: 1.1.0.2 - 1.1.0.6 "Bug fixes and made more clear how to obtain forms"
+Changelog: 1.1.0.1 "Added a drop to Moon Lord to unlock SSJ5 and LSSJ5 and SSJ8/LSSJ8, this should fix the problem where players cannot unlock the form in multiplayer or due to a bug in single player"
+Changelog: 1.1.0.0 "Added the AF series for non-legendary traits, a few bugs fixed"
+Changelog: 1.0.0.0 "Added LSSJ10: The Forbidden Power, to access this form, consume the "voodoo doll on a plate" while having LSSJ9 unlocked, you can stack this form"."

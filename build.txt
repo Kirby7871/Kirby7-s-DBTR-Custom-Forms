@@ -1,0 +1,6 @@
+displayName = Kirby7's DBTR Custom Forms
+author = Kirby7
+version = 1.1.1.0
+modReferences = DBZGoatLib, DBTBalance, DBZMODPORT
+includeSource = true
+sortAfter = DBZMODPORT, DBZGoatLib, dbzcalamity

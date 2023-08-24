@@ -13,6 +13,8 @@ using K7DBTRF.Buffs;
 using DBZMODPORT.Buffs.SSJBuffs;
 using DBTBalance;
 using IL.Terraria.Map;
+using Terraria.GameContent.ItemDropRules;
+using K7DBTRF.Items.Consumables;
 
 namespace K7DBTRF.NPCs
 {
@@ -23,11 +25,11 @@ namespace K7DBTRF.NPCs
             base.OnKill(npc);
             if (Main.netMode == NetmodeID.SinglePlayer)
             {
-                Player player = Main.CurrentPlayer;
+                Player player = Main.LocalPlayer;
                 if (npc.type == NPCID.CultistBoss)
                 {
                     var modPlayer = player.GetModPlayer<KPlayer>();
-                    KPlayer kplayer = Main.CurrentPlayer.GetModPlayer<KPlayer>();
+                    KPlayer kplayer = Main.LocalPlayer.GetModPlayer<KPlayer>();
 
 
                     float LSSJ3Mastery = GPlayer.ModPlayer(player).GetMastery(ModContent.BuffType<LSSJ3Buff>());
@@ -47,7 +49,7 @@ namespace K7DBTRF.NPCs
                 if (npc.type == NPCID.MoonLordCore)
                 {
                     KPlayer modPlayer = player.GetModPlayer<KPlayer>();
-                    KPlayer kplayer = Main.CurrentPlayer.GetModPlayer<KPlayer>();
+                    KPlayer kplayer = Main.LocalPlayer.GetModPlayer<KPlayer>();
                     BPlayer bplayer = player.GetModPlayer<BPlayer>();
 
                     if ((!kplayer.LSSJ5Achieved) && bplayer.LSSJ4Achieved)
@@ -57,7 +59,7 @@ namespace K7DBTRF.NPCs
                     }
                     if (!kplayer.SSJ5Achieved)
                     {
-                        kplayer.SSJ5Achieved= true;
+                        kplayer.SSJ5Achieved = true;
                         return;
                     }
                 }
@@ -134,6 +136,22 @@ namespace K7DBTRF.NPCs
                     }
                 }
             }
+        }
+
+
+
+        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+        {
+            if (npc.type == NPCID.MoonLordCore)
+            {
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SSJ5Unlock>(), 1, 1));
+            }
+
+            if (npc.type == NPCID.CultistBoss)
+            {
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SSJ8Unlock>(), 1, 1));
+            }
+            base.ModifyNPCLoot(npc, npcLoot);
         }
     }
 }
