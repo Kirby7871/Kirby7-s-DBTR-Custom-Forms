@@ -6,12 +6,12 @@ using System.Reflection;
 using MonoMod.RuntimeDetour;
 using Terraria;
 using System.Dynamic;
-using DBTBalance;
-using DBTBalance.Buffs;
-using DBTBalance.Helpers;
+//using DBTBalance;
+//using DBTBalance.Buffs;
+//using DBTBalance.Helpers;
 using System.IO;
 using DBZGoatLib;
-using DBTBalance.Model;
+//using DBTBalance.Model;
 using Terraria.ModLoader.Config;
 using K7DBTRF.Assets;
 using K7DBTRF.Buffs;
@@ -26,7 +26,7 @@ namespace K7DBTRF
         public static Mod DBZMOD;
         public static Mod DBCA;
         public static Mod GOATLIB;
-        public static Mod DBTBalance;
+        //public static Mod DBTBalance;
         public static Mod StarsAbove;
     }
 }
